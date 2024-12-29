@@ -16,6 +16,7 @@
         public DateTime? UpdatedAt { get; private set; }
         public byte[] RowVersion { get; private set; } = null!;
 
+        public ProductDetail? ProductDetail { get; private set; }
 
         #endregion
 
@@ -46,28 +47,68 @@
 
         public void Update(string name, decimal price, string description, int stockQuantity)
         {
+            // Validaciones
+            if (string.IsNullOrWhiteSpace(name))
+                throw new ArgumentNullException("El nombre del producto es requerido.");
+
+            if (string.IsNullOrWhiteSpace(description))
+                throw new ArgumentNullException("La descripcion del producto es requerido");
+
+            if (price < 0)
+                throw new ArgumentNullException("El precio del producto no puede ser negativo.");
+
+            if (stockQuantity < 0)
+                throw new ArgumentNullException("La cantidad de stock no puede ser negativa.");
+
             Name = name;
             Price = price;
             Description = description;
             StockQuantity = stockQuantity;
-            MarcarComoActualizado();
+            MarkAsUpdated();
         }
 
         public void Deactivate()
         {
             IsActive = false;
-            MarcarComoActualizado();
+            MarkAsUpdated();
         }
 
         public void Activate()
         {
             IsActive = true;
-            MarcarComoActualizado();
+            MarkAsUpdated();
         }
 
-        private void MarcarComoActualizado()
+        private void MarkAsUpdated()
         {
             UpdatedAt = DateTime.UtcNow;
+        }
+
+        /// <summary>
+        /// Incrementa la cantidad de stock.
+        /// </summary>
+        public void IncreaseStock(int quantity)
+        {
+            if (quantity <= 0)
+                throw new ArgumentException("La cantidad a incrementar debe ser positiva.");
+
+            StockQuantity += quantity;
+            MarkAsUpdated();
+        }
+
+        /// <summary>
+        /// Decrementa la cantidad de stock.
+        /// </summary>
+        public void DecreaseStock(int quantity)
+        {
+            if (quantity <= 0)
+                throw new ArgumentException("La cantidad a decrementar debe ser positiva.");
+
+            if (StockQuantity < quantity)
+                throw new ArgumentException("No hay suficiente stock para decrementar.");
+
+            StockQuantity -= quantity;
+            MarkAsUpdated();
         }
 
         #endregion

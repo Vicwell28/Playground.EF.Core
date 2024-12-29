@@ -1,12 +1,14 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Playground.EF.Core.Domain.Entities.Abstracts;
+using Playground.EF.Core.Infrastructure.Persistence.Config;
 
 namespace Playground.EF.Core.Infrastructure.Persistence
 {
     public class AppDbContext : DbContext
     {
         // DbSet para nuestra entidad
-        public DbSet<Product> Products { get; set; }
+        public DbSet<Product> Products => Set<Product>();
+        public DbSet<ProductDetail> ProductDetail => Set<ProductDetail>();
 
         // Configuración directa de la cadena de conexión
         // EF Core tomará esta configuración cuando hagas migraciones
@@ -30,6 +32,7 @@ namespace Playground.EF.Core.Infrastructure.Persistence
         public static void ApplyConfiguration(ModelBuilder modelBuilder)
         {
             modelBuilder.ApplyConfiguration(new ProductConfiguration());
+            modelBuilder.ApplyConfiguration(new ProductDetailConfiguration());
         }
     }
 }
