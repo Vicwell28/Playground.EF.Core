@@ -9,6 +9,7 @@
 
   <ItemGroup>
     <Folder Include="Domain\ValueObjects\" />
+    <Folder Include="Infrastructure\Persistence\Config\" />
     <Folder Include="Infrastructure\Persistence\Migrations\" />
   </ItemGroup>
 

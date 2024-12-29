@@ -1,6 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Playground.EF.Core.Domain.Entities.Abstracts;
-using Playground.EF.Core.Infrastructure.Persistence.Config;
 
 namespace Playground.EF.Core.Infrastructure.Persistence
 {
@@ -24,6 +23,12 @@ namespace Playground.EF.Core.Infrastructure.Persistence
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
+
+            ApplyConfiguration(modelBuilder);
+        }
+
+        public static void ApplyConfiguration(ModelBuilder modelBuilder)
+        {
             modelBuilder.ApplyConfiguration(new ProductConfiguration());
         }
     }

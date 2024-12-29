@@ -1,23 +1,27 @@
-﻿using Playground.EF.Core.Infrastructure.Persistence;
+﻿using Microsoft.EntityFrameworkCore;
+using Playground.EF.Core.Infrastructure.Persistence;
 
 namespace Playground.EF.Core
 {
     internal class Program
     {
-        static void Main(string[] args)
+        // Cambiar la firma del método Main para que sea asíncrona
+        static async Task Main(string[] args)
         {
             Console.WriteLine("=== Aplicación de Consola con EF Core ===");
 
-            // Creamos la instancia del contexto (sin DI, sin factories)
-            using (var context = new AppDbContext())
+            // Usar 'await using' si AppDbContext implementa IAsyncDisposable
+            await using (var context = new AppDbContext())
             {
-                // Consultamos los datos
-                var productos = context.Products.ToList();
-                Console.WriteLine("Productos en la base de datos:");
+                var productId = "17D783A4-326C-4F96-B5E4-256ADD368725";
 
-                foreach (var p in productos)
+                var product = await context.Products.FirstOrDefaultAsync(p => p.Id == productId);
+
+                if (product != null)
                 {
-                    Console.WriteLine($"ID: {p.Id}, Nombre: {p.Name}, Precio: {p.Price}");
+                    product.Deactivate();
+
+                    await context.SaveChangesAsync();
                 }
             }
 

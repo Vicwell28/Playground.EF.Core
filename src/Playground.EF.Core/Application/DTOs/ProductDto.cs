@@ -2,8 +2,17 @@
 {
     public class ProductDto
     {
-        public string Id { get; set; }
-        public string Name { get; set; }
+        public ProductDto() { }
+
+        public ProductDto(string id, string name, decimal price)
+        {
+            Id = id;
+            Name = name;
+            Price = price;
+        }
+
+        public string Id { get; set; } = null!;
+        public string Name { get; set; } = null!;
         public decimal Price { get; set; }
     }
 }
