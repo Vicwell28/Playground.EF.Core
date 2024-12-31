@@ -19,9 +19,11 @@ namespace Playground.EF.Core
                 // Usar 'await using' si AppDbContext implementa IAsyncDisposable
                 await using (var context = new AppDbContext())
                 {
-                  
+                    var producto = await context.Reviews
+                         .Include(r => r.Product)
+                         .ToListAsync();
 
-
+                    ConsoleHelper.WriteJson(producto, indent: true, ignoreCycles: true);
                 }
             }
             catch (Exception ex)

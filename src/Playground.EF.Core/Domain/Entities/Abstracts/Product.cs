@@ -16,7 +16,7 @@
 
         public ProductDetail? ProductDetail { get; private set; }
         public ICollection<Review>? Reviews { get; private set; }
-
+        public ICollection<ProductCategory> ProductCategories { get; private set; } = new List<ProductCategory>();
 
         #endregion
 
@@ -108,6 +108,13 @@
                 throw new ArgumentException("No hay suficiente stock para decrementar.");
 
             StockQuantity -= quantity;
+            MarkAsUpdated();
+        }
+
+        public void AddCategory(Category category, bool isPrimary = false)
+        {
+            var productCategory = new ProductCategory(this, category, isPrimary);
+            ProductCategories.Add(productCategory);
             MarkAsUpdated();
         }
 

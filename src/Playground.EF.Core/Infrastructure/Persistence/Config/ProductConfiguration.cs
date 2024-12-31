@@ -83,7 +83,6 @@ public class ProductConfiguration : IEntityTypeConfiguration<Product>
         builder.ToTable(b => b.HasCheckConstraint("CK_TBL_PRODUCTS_PRICE", "[PRICE] >= 0"));
         builder.ToTable(b => b.HasCheckConstraint("CK_TBL_PRODUCTS_STOCK", "[STOCK_QUANTITY] >= 0"));
 
-
         // Índices adicionales
         builder.HasIndex(p => p.Name).HasDatabaseName("IX_Product_Name");
         builder.HasIndex(p => p.IsActive).HasDatabaseName("IX_Product_IsActive");
