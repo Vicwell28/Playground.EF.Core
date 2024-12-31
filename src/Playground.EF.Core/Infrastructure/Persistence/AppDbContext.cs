@@ -9,6 +9,7 @@ namespace Playground.EF.Core.Infrastructure.Persistence
         // DbSet para nuestra entidad
         public DbSet<Product> Products => Set<Product>();
         public DbSet<ProductDetail> ProductDetail => Set<ProductDetail>();
+        public DbSet<Review> Reviews => Set<Review>();
 
         // Configuración directa de la cadena de conexión
         // EF Core tomará esta configuración cuando hagas migraciones
@@ -33,6 +34,7 @@ namespace Playground.EF.Core.Infrastructure.Persistence
         {
             modelBuilder.ApplyConfiguration(new ProductConfiguration());
             modelBuilder.ApplyConfiguration(new ProductDetailConfiguration());
+            modelBuilder.ApplyConfiguration(new ReviewConfiguration());
         }
     }
 }

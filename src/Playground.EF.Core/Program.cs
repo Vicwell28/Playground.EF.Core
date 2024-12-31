@@ -2,6 +2,8 @@
 using Playground.EF.Core.Domain.Entities.Abstracts;
 using Playground.EF.Core.Helpers;
 using Playground.EF.Core.Infrastructure.Persistence;
+using System.Linq.Expressions;
+using System.Net.Http.Headers;
 
 namespace Playground.EF.Core
 {
@@ -17,21 +19,9 @@ namespace Playground.EF.Core
                 // Usar 'await using' si AppDbContext implementa IAsyncDisposable
                 await using (var context = new AppDbContext())
                 {
-                    var productId = "17D783A4-326C-4F96-B5E4-256ADD368725";
+                  
 
-                    var product = await context.Products.FirstOrDefaultAsync(p => p.Id == productId);
 
-                    if (product == null)
-                    {
-                        Console.WriteLine("No se encontró el producto.");
-                        return;
-                    }
-
-                    var productDetail = new ProductDetail("Apple", "iPhone 12", "1 año de garantía", product);
-
-                    context.ProductDetail.Add(productDetail);
-
-                    await context.SaveChangesAsync();
                 }
             }
             catch (Exception ex)

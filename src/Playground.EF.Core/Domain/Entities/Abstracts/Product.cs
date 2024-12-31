@@ -3,7 +3,7 @@
     /// <summary>
     /// Representa un producto en el sistema.
     /// </summary>
-    public class Product : Entity
+    public class Product : AuditableEntity
     {
         #region Propiedades
 
@@ -12,11 +12,11 @@
         public string Description { get; private set; } = null!;
         public int StockQuantity { get; private set; }
         public bool IsActive { get; private set; }
-        public DateTime CreatedAt { get; private set; }
-        public DateTime? UpdatedAt { get; private set; }
         public byte[] RowVersion { get; private set; } = null!;
 
         public ProductDetail? ProductDetail { get; private set; }
+        public ICollection<Review>? Reviews { get; private set; }
+
 
         #endregion
 
