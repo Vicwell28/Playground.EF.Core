@@ -1,9 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Playground.EF.Core.Domain.Entities.Abstracts;
 using Playground.EF.Core.Helpers;
 using Playground.EF.Core.Infrastructure.Persistence;
-using System.Linq.Expressions;
-using System.Net.Http.Headers;
+using System.Diagnostics;
 
 namespace Playground.EF.Core
 {
@@ -19,16 +17,19 @@ namespace Playground.EF.Core
                 // Usar 'await using' si AppDbContext implementa IAsyncDisposable
                 await using (var context = new AppDbContext())
                 {
-                    var producto = await context.Reviews
-                         .Include(r => r.Product)
-                         .ToListAsync();
 
-                    ConsoleHelper.WriteJson(producto, indent: true, ignoreCycles: true);
+                    var prdoucts = await context.Products
+                        .Include(p => p.ProductCategories)
+                        .ThenInclude(p => p.Category)
+                        .Where(p => p.ProductCategories != null && p.ProductCategories.Any())
+                        .ToListAsync();
+
+                    ConsoleHelper.WriteJson(prdoucts, indent: true, ignoreCycles: true);
                 }
             }
             catch (Exception ex)
             {
-                ConsoleHelper.WriteJson(ex, indent: true, ignoreCycles: true);
+                Debug.WriteLine(ex.Message);
                 throw;
             }
 

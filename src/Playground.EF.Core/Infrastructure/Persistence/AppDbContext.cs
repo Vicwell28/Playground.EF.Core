@@ -10,6 +10,8 @@ namespace Playground.EF.Core.Infrastructure.Persistence
         public DbSet<Product> Products => Set<Product>();
         public DbSet<ProductDetail> ProductDetail => Set<ProductDetail>();
         public DbSet<Review> Reviews => Set<Review>();
+        public DbSet<Category> Categories => Set<Category>();
+        public DbSet<ProductCategory> ProductsCategories => Set<ProductCategory>();
 
         // Configuración directa de la cadena de conexión
         // EF Core tomará esta configuración cuando hagas migraciones
